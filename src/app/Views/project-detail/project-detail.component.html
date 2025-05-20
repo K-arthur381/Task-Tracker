@@ -19,7 +19,7 @@
 <div class="col-md-4">
     <div class="card-box">
         <apx-chart
-  [series]="chartOptions.series"
+  [series]="[Totaltodo,Totalcomplete,Totalprogress,Totalonhold]"
   [chart]="chartOptions.chart"
   [labels]="chartOptions.labels"
   [responsive]="chartOptions.responsive">
@@ -29,7 +29,7 @@
 <div class="col-md-3">
     <div class="card-box">
         <apx-chart
-  [series]="chartOptions2.series"
+ [series]="[Totaltodo,Totalcomplete,Totalprogress,Totalonhold]"
   [chart]="chartOptions2.chart"
   [labels]="chartOptions2.labels"
   [plotOptions]="chartOptions2.plotOptions"

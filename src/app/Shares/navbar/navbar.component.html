@@ -1,44 +1,58 @@
-<div class="container my-2">
- <!-- Header (Sticky) -->
-<div class="d-flex justify-content-between align-items-center mb-2 bg-white sticky-top p-3 border-bottom">
-  <h5>☰ Weekly Task Flow Tracker</h5>
-  <div class=" d-flex align-items-center">
-  <!-- Show input if username is null -->
-    <div *ngIf="option" class=" d-flex align-items-center text-end">
-      <input class="form-control mb-1 me-2" [(ngModel)]="nameInput" placeholder="Enter Your Name,First">
-      <button class="btn btn-secondary me-3" (click)="saveName()">Submit</button>
-    </div>
- <i class="bi bi-pencil-square ms-4"  (click)="option = !option" style="color: orange; cursor: pointer; font-size: 1.5rem;"></i>&nbsp;
-    <!-- Show welcome message if username is available -->
-    <div *ngIf="userName" class="text-primary fs-6 fw-bold d-flex align-items-center me-3">
-     
-      &nbsp; Welcome, {{ userName }}
-    </div>
-    |
- <button class="btn btn-primary d-flex align-items-center ms-3" (click)="OpenAddNewTaskDialog()">
-  <i class="bi bi-plus-circle me-2"></i>
-  <span class="d-none d-sm-inline">Add New Task</span>
-</button>
-</div>
-</div>
+<div class="container-lg my-2 px-3">
+  <!-- Header (Sticky) -->
+  <div class="bg-white sticky-top p-3 border-bottom">
+    <div class="row align-items-center">
+      <div class="col-md-4 col-sm-12 mb-2 mb-md-0">
+        <h5 class="m-0">☰ Weekly Task Flow Tracker</h5>
+      </div>
 
+      <div class="col-md-8 col-sm-12 d-flex flex-wrap justify-content-md-end align-items-center">
+        <!-- Show input if username is null -->
+        <div *ngIf="option" class="d-flex align-items-center me-2 flex-wrap mb-2 mb-md-0">
+          <input
+            class="form-control me-2 mb-2 mb-md-0"
+            [(ngModel)]="nameInput"
+            placeholder="Enter Your Name, First"
+            style="min-width: 150px;max-width: 190px;"
+          />
+          <button class="btn btn-secondary me-2" (click)="saveName()">Submit</button>
+        </div>
+
+        <i
+          class="bi bi-pencil-square text-warning me-2"
+          (click)="option = !option"
+          style="cursor: pointer; font-size: 1.5rem;"
+        ></i>
+
+        <!-- Show welcome message if username is available -->
+        <div *ngIf="userName" class="text-primary fw-bold me-3">
+          Welcome, {{ userName }}
+        </div>
+
+        <button class="btn btn-primary d-flex align-items-center" (click)="OpenAddNewTaskDialog()">
+          <i class="bi bi-plus-circle me-2"></i>
+          <span class="d-none d-sm-inline">Add New Task</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Navigation -->
-  <ul class="nav nav-tabs mb-3">
+  <ul class="nav nav-tabs flex-wrap mt-2 mb-3">
     <li class="nav-item">
-      <a  routerLink="/dashboard"  routerLinkActive="active" class="nav-link" >Dashboard</a>
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
     </li>
     <li class="nav-item">
-      <a routerLink="/tasklist" routerLinkActive="active" class="nav-link" >Task List</a>
+      <a routerLink="/tasklist" routerLinkActive="active" class="nav-link">Task List</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link"routerLink="/projectlist" routerLinkActive="active" >Project List</a>
+      <a routerLink="/projectlist" routerLinkActive="active" class="nav-link">Project List</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/report"  routerLinkActive="active" >Reports</a>
+      <a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>
     </li>
   </ul>
 
- <router-outlet></router-outlet>
- <div class="mt-4 mb-3">&nbsp;</div>
+  <router-outlet></router-outlet>
+  <div class="mt-4 mb-3">&nbsp;</div>
 </div>

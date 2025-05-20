@@ -29,7 +29,7 @@ export class AddNewTaskComponent {
 
   saveTask() {
 
-    let existingTasks = JSON.parse(localStorage.getItem('TaskData') || '[]');
+    let existingTasks = JSON.parse(localStorage.getItem('TaskListData') || '[]');
   
        if (this.index !== -1) {
         // Edit existing task
@@ -39,7 +39,7 @@ export class AddNewTaskComponent {
         // Add new task
         existingTasks.push(this.task);
       }
-    localStorage.setItem('TaskData', JSON.stringify(existingTasks));
+    localStorage.setItem('TaskListData', JSON.stringify(existingTasks));
       this.observerService.notifyTaskUpdated(); // ✅ notify other components 
     this.dialogRef.close(); // Close dialog
   }

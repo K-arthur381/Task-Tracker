@@ -34,7 +34,7 @@ export class DashboardComponent {
   }
 
   loadTaskData() {
-    this.TaskData = JSON.parse(localStorage.getItem('TaskData') || '[]');
+    this.TaskData = JSON.parse(localStorage.getItem('TaskListData') || '[]');
     this.ProjectData = JSON.parse(localStorage.getItem('ProjectData') || '[]');
 
     this.ToDo_TotalCount = this.TaskData.filter((t: { status: string }) => t.status === 'ToDo').length;

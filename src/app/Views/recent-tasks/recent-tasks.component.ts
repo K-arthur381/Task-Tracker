@@ -36,7 +36,7 @@ export class RecentTasksComponent {
   }
 
   loadTaskData() {
-    this.TaskData = JSON.parse(localStorage.getItem('TaskData') || '[]');
+    this.TaskData = JSON.parse(localStorage.getItem('TaskListData') || '[]');
     this.ProgressData = this.TaskData
       .filter((t: { status: string }) => t.status !== 'Completed');
   }
@@ -47,7 +47,7 @@ export class RecentTasksComponent {
      const task = this.TaskData[index];
     if (confirm("Are you sure you want to delete this task?")) {
       this.TaskData.splice(index, 1); // Remove task from array
-      localStorage.setItem('TaskData', JSON.stringify(this.TaskData)); // Update localStorage
+      localStorage.setItem('TaskListData', JSON.stringify(this.TaskData)); // Update localStorage
       this.loadTaskData();
     }
   }

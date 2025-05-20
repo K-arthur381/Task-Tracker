@@ -29,7 +29,7 @@ ngOnInit() {
 }
 
 loadTaskData(){
-  this.TaskData=JSON.parse(localStorage.getItem('TaskData') || '[]');  
+  this.TaskData=JSON.parse(localStorage.getItem('TaskListData') || '[]');  
   this.TaskData.sort((a: any, b: any) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 }
 
@@ -37,7 +37,7 @@ loadTaskData(){
   deleteTask(taskId: number): void {
     if (confirm("Are you sure you want to delete this task?")) {
       this.TaskData.splice(taskId, 1); // Remove task from array
-      localStorage.setItem('TaskData', JSON.stringify(this.TaskData)); // Update localStorage
+      localStorage.setItem('TaskListData', JSON.stringify(this.TaskData)); // Update localStorage
       this.loadTaskData();
     }
   }
