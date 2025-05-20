@@ -1,0 +1,76 @@
+<div class="container mt-4">
+ <!-- Title -->
+    <div class="col-12 col-md-4">
+      <h6 class="mb-0">
+        <i class="bi bi-calendar-week text-success" style="cursor: pointer;"></i>
+        Weekly Task Report
+      </h6>
+    </div>
+
+  <div class="container mb-4">
+  <div class="row align-items-end g-3">
+   <div class="col-6 col-md-3"></div>
+
+    <!-- From Date -->
+    <div class="col-6 col-md-3">
+      <label for="fromDate" class="form-label mt-2 fw-semibold">StartDate&nbsp;</label>
+      <input
+        type="date"
+        id="fromDate"
+        class="form-control"
+        [(ngModel)]="customStartDate"
+        (change)="filterWeeklyTasks()"
+      />
+    </div>
+
+    <!-- To Date -->
+    <div class="col-6 col-md-3">
+      <label for="toDate" class="form-label mt-2 fw-semibold">FinishDate&nbsp;</label>
+      <input
+        type="date"
+        id="toDate"
+        class="form-control"
+        [(ngModel)]="customEndDate"
+        (change)="filterWeeklyTasks()"
+      />
+    </div>
+
+    <!-- Export Button -->
+    <div class="col-12 col-md-3 text-md-end">
+      <label class="d-none d-md-block invisible">Export</label> <!-- Just to align button with inputs -->
+      <button class="btn btn-outline-success w-100 w-md-auto" (click)="exportToExcel()">
+        <i class="bi bi-download"></i> Export to Excel
+      </button>
+    </div>
+  </div>
+</div>
+
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover text-center">
+      <thead class="table-secondary">
+        <tr>
+          <th>No</th>
+          <th>Task Description</th>
+          <th>Action By</th>
+          <th>Action Taken</th>
+          <th>StartDate</th>
+           <th>FinishDate</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+     <tbody>
+  <tr *ngFor="let task of weeklyTasks; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ task.name }}</td>
+    <td>{{ UserData.pm }}</td>
+    <td>{{ UserData.username }}</td>
+    <td>{{ task.startDate |  date:'MMM d' }}</td>
+    <td>{{ task.endDate | date:'MMM d' }}</td>
+    <td>{{ task.status }}</td>
+  </tr>
+</tbody>
+
+    </table>
+  </div>
+</div>

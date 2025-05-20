@@ -1,0 +1,136 @@
+<h2 *ngIf="index == -1" mat-dialog-title><i class="bi bi-plus-circle"></i>&nbsp;Add New Task</h2>
+<h2 *ngIf="index != -1" mat-dialog-title><i class="bi bi-pencil"></i>&nbsp;Edit Task</h2>
+
+<mat-dialog-content>
+ <form #taskForm="ngForm">
+  <!-- Task Name -->
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-icon matPrefix>work</mat-icon>
+    <mat-label>Task Name</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="task.name"
+      name="name"
+      placeholder="Task Name"
+      rows="2"
+      required
+      minlength="3"
+      #nameCtrl="ngModel"
+    ></textarea>
+    <mat-error *ngIf="nameCtrl.invalid && nameCtrl.touched">
+      Task Name is required and must be at least 3 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Project and Status -->
+  <div style="display: flex; gap: 16px;">
+    <!-- Project -->
+    <mat-form-field appearance="outline" style="flex: 1;">
+      <mat-label>Project</mat-label>
+      <mat-select
+        [(ngModel)]="task.project"
+        name="project"
+        required
+        #projectCtrl="ngModel"
+      >
+        <mat-option *ngFor="let proj of ProjectList" [value]="proj.projectName">
+          {{ proj.projectName }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="projectCtrl.invalid && projectCtrl.touched">Project is required</mat-error>
+    </mat-form-field>
+
+    <!-- Status -->
+    <mat-form-field appearance="outline" style="flex: 1;">
+      <mat-label>Status</mat-label>
+      <mat-select
+        [(ngModel)]="task.status"
+        name="status"
+        required
+        #statusCtrl="ngModel"
+      >
+        <mat-option value="ToDo">To Do</mat-option>
+        <mat-option value="InProgress">In Progress</mat-option>
+        <mat-option value="Completed">Completed</mat-option>
+        <mat-option value="OnHold">On Hold</mat-option>
+      </mat-select>
+      <mat-error *ngIf="statusCtrl.invalid && statusCtrl.touched">Status is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Note and Priority -->
+  <div style="display: flex; gap: 16px;">
+    <!-- Note -->
+    <mat-form-field style="flex:1;" appearance="outline">
+      <mat-icon matPrefix>note</mat-icon>
+      <mat-label>Note</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="task.note"
+        name="note"
+        placeholder="Additional notes"
+        rows="2"
+      ></textarea>
+    </mat-form-field>
+
+    <!-- Priority -->
+    <mat-form-field style="flex:1;" appearance="outline">
+      <mat-label>Priority</mat-label>
+      <mat-select
+        [(ngModel)]="task.priority"
+        name="priority"
+        required
+        #priorityCtrl="ngModel"
+      >
+        <mat-option value="Low">Low</mat-option>
+        <mat-option value="Medium">Medium</mat-option>
+        <mat-option value="High">High</mat-option>
+        <mat-option value="Urgent">Urgent</mat-option>
+      </mat-select>
+      <mat-error *ngIf="priorityCtrl.invalid && priorityCtrl.touched">Priority is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Dates -->
+  <div style="display: flex; gap: 16px;">
+    <!-- Start Date -->
+    <mat-form-field appearance="outline" style="flex:1;">
+      <mat-label>Start Date</mat-label>
+      <input
+        matInput
+        [(ngModel)]="task.startDate"
+        name="startDate"
+        required
+        [matDatepicker]="startPicker"
+        placeholder="Start date"
+        #startDateCtrl="ngModel"
+      />
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+      <mat-error *ngIf="startDateCtrl.invalid && startDateCtrl.touched">Start date is required</mat-error>
+    </mat-form-field>
+
+    <!-- End Date -->
+    <mat-form-field appearance="outline" style="flex:1;">
+      <mat-label>Finish Date</mat-label>
+      <input
+        matInput
+        [(ngModel)]="task.endDate"
+        name="endDate"
+        required
+        [matDatepicker]="endPicker"
+        placeholder="Finish date"
+        #endDateCtrl="ngModel"
+      />
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+      <mat-error *ngIf="endDateCtrl.invalid && endDateCtrl.touched">Finish date is required</mat-error>
+    </mat-form-field>
+  </div>
+</form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="saveTask()" [disabled]="taskForm.invalid">Save</button>
+</mat-dialog-actions>

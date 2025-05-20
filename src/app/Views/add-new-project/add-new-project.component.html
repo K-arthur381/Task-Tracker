@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add New Project</h2>
+
+<mat-dialog-content>
+  <form #projectForm="ngForm">
+    <mat-form-field class="full-width">
+      <mat-icon matPrefix>work</mat-icon>
+      <mat-label>Enter Project Name</mat-label>
+      <input matInput [(ngModel)]="Project.projectName" name="projectName" required minlength="3" #projectNameInput="ngModel" />
+      <mat-icon matSuffix *ngIf="projectNameInput.valid">check_circle</mat-icon>
+      <mat-error *ngIf="projectNameInput.errors?.['required']">
+        Project name is required
+      </mat-error>
+      <mat-error *ngIf="projectNameInput.errors?.['minlength']">
+        Minimum 3 characters required
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button (click)="SaveProject()" color="primary" [disabled]="!projectForm.valid">
+    Save
+  </button>
+</mat-dialog-actions>
