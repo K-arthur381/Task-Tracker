@@ -8,6 +8,7 @@ import { ObserverService } from '../../Serives/observer.service';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
+   weeklyEnd:any;
   UserData: any;
   TaskData: any[] = [];
   weeklyTasks: any[] = [];
@@ -18,19 +19,16 @@ constructor(private ObserverService: ObserverService){}
 
   ngOnInit(): void {
      this.ObserverService.taskUpdated$.subscribe(() => {
-      this.filterWeeklyTasks(); // reload logic
-    });
     this.UserData = JSON.parse(localStorage.getItem('UserData') || '{}');
     this.TaskData = JSON.parse(localStorage.getItem('TaskListData') || '[]');
      const { monday, sunday,friday } = this.getStartAndEndOfWeek();
      console.log('from oninit',monday)
   // Set default date inputs
   this.customStartDate = this.formatDateInput(monday);
-    console.log('from oninitw',this.customStartDate)
   this.customEndDate = this.formatDateInput(sunday);
-
   // Apply default filter
   this.filterWeeklyTasks();
+   });
   }
 
  getStartAndEndOfWeek(): { monday: Date; sunday: Date,friday:Date } {
@@ -74,7 +72,13 @@ formatDate(d: Date): string {
   const filterStart = this.stripTime(new Date(this.customStartDate || monday));
   const filterEnd = this.stripTime(new Date(this.customEndDate || sunday));
 
-  this.weeklyTasks = this.TaskData.filter(task => {
+console.log(this.customEndDate,'fri',friday)
+
+  const ProgressCompleteData = this.TaskData.filter(
+  (t: { status: string }) => !['ToDo', 'OnHold'].includes(t.status)
+);
+
+  this.weeklyTasks = ProgressCompleteData.filter(task => {
     const startDate = this.stripTime(new Date(task.startDate));
     const endDate = this.stripTime(new Date(task.endDate));
    return (startDate >= filterStart && startDate <= filterEnd) || endDate<=filterEnd;
@@ -89,9 +93,14 @@ formatDate(d: Date): string {
   const { monday, sunday,friday } = this.getStartAndEndOfWeek();
   const filterStart = this.stripTime(new Date(this.customStartDate || monday));
   const filterEnd = this.stripTime(new Date(this.customEndDate || sunday));
-  const weeklyEnd = this.stripTime(new Date(this.customEndDate || friday));
+  
+  if(this.customEndDate=sunday){
+     this.weeklyEnd = this.stripTime(new Date(friday));
+  }else{
+     this.weeklyEnd = this.stripTime(new Date(this.customEndDate));
+  }
 
-  const dateRange = `${this.formatDate(new Date(filterStart))} to ${this.formatDate(new Date(weeklyEnd))}`;
+  const dateRange = `${this.formatDate(new Date(filterStart))} to ${this.formatDate(new Date(this.weeklyEnd))}`;
 
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Weekly Report');
@@ -132,10 +141,13 @@ formatDate(d: Date): string {
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       const dateCopy = new Date(d);
       if (dateCopy >= filterStart && dateCopy <= filterEnd) {
+      const isEndDate = this.stripTime(dateCopy).getTime() === this.stripTime(new Date(task.endDate)).getTime();
+      const isCompleted = task.status === 'Completed';
+
         taskEntries.push({
           ...task,
           date: this.formatDate(dateCopy),
-          status: (this.stripTime(dateCopy).getTime() === this.stripTime(new Date(task.endDate)).getTime()) ? 'Completed' : 'Progress'
+         status: (isEndDate && isCompleted) ? 'Completed' : 'Progress'
         });
       }
     }
