@@ -9,20 +9,15 @@
       <div class="col-md-8 col-sm-12 d-flex flex-wrap justify-content-md-end align-items-center">
         <!-- Show input if username is null -->
         <div *ngIf="option" class="d-flex align-items-center me-2 flex-wrap mb-2 mb-md-0">
-          <input
-            class="form-control me-2 mb-2 mb-md-0"
-            [(ngModel)]="nameInput"
-            placeholder="Enter Your Name, First"
-            style="min-width: 150px;max-width: 190px;"
-          />
-          <button class="btn btn-secondary me-2" (click)="saveName()">Submit</button>
+          <input class="form-control me-1 mb-2 mb-md-0" [(ngModel)]="userName" placeholder="Enter Your Name"
+            style="min-width: 150px;max-width: 190px;" />
+          <input class="form-control me-1 mb-2 mb-md-0" [(ngModel)]="pm" placeholder="Enter PM Name"
+            style="min-width: 150px;max-width: 190px;" />
+          <button class="btn btn-secondary" (click)="saveName()">Submit</button>
         </div>
 
-        <i
-          class="bi bi-pencil-square text-warning me-2"
-          (click)="option = !option"
-          style="cursor: pointer; font-size: 1.5rem;"
-        ></i>
+        <i class="bi bi-pencil-square text-warning me-2" (click)="option = !option"
+          style="cursor: pointer; font-size: 1.5rem;"></i>
 
         <!-- Show welcome message if username is available -->
         <div *ngIf="userName" class="text-primary fw-bold me-3">

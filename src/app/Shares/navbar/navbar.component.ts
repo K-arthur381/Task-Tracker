@@ -9,7 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class NavbarComponent {
   UserData:any;
-  userName: string | null = null;
+  userName:string = '';
+  pm:string| null=null;
   nameInput: string = '';
   option:boolean=false;
 
@@ -18,16 +19,17 @@ export class NavbarComponent {
   ngOnInit() {
     this.UserData = JSON.parse(localStorage.getItem('UserData') || '[]');
     this.userName=this.UserData.username;
+    this.pm=this.UserData.pm;
   }
 
   saveName() {
-    if (this.nameInput.trim()) {
+    if (this.userName.trim() && this.pm?.trim()) {
  const data = {
-      username: this.nameInput.trim(),
-      pm: 'Daw Htet Htet Aung'
+      username: this.userName.trim(),
+      pm: this.pm?.trim()
     };
   localStorage.setItem('UserData', JSON.stringify(data));
-   this.userName = this.nameInput.trim();
+  // this.userName = this.nameInput.trim();
     }
     this.option=false;
   }

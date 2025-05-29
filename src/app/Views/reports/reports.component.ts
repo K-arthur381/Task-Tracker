@@ -81,7 +81,7 @@ console.log(this.customEndDate,'fri',friday)
   this.weeklyTasks = ProgressCompleteData.filter(task => {
     const startDate = this.stripTime(new Date(task.startDate));
     const endDate = this.stripTime(new Date(task.endDate));
-   return (startDate >= filterStart && startDate <= filterEnd) || endDate<=filterEnd;
+   return (startDate <= filterEnd && endDate >= filterStart);
   });
 }
 
